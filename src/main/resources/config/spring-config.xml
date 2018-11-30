@@ -6,12 +6,4 @@
     <context:component-scan base-package="pl.dopierala"/>
     <context:property-placeholder location="classpath:knightRepository.properties"/>
     <import resource="classpath:config/knightRepository-config.xml"/>
-    <bean id="quest" class="pl.dopierala.SpringCourse.domain.Quest"/>
-    <bean id="knight" class="pl.dopierala.SpringCourse.domain.Knight">
-        <constructor-arg index="0" value="Lancelot"/>
-        <constructor-arg index="1" value="29"/>
-        <property name="quest" ref="quest"/>
-    </bean>
-
-
 </beans>

@@ -1,6 +1,7 @@
 package pl.dopierala.SpringCourse.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.dopierala.SpringCourse.domain.Quest;
 import pl.dopierala.SpringCourse.domain.repository.KnightRepository;
@@ -13,6 +14,7 @@ import java.util.Random;
 public class QuestService {
 
     @Autowired
+    //@Qualifier(value = "inMemoryKnightRepository")
     KnightRepository knightRepository;
 
     @Autowired
@@ -20,7 +22,7 @@ public class QuestService {
 
     final static Random rnd = new Random();
 
-    public void assignRandomQuest(String knightName){
+    public void assignRandomQuest(String knightName) {
         List<Quest> allQuests = questRepository.getAll();
         Quest randomQuest = allQuests.get(rnd.nextInt(allQuests.size()));
         knightRepository.getKnight(knightName).setQuest(randomQuest);

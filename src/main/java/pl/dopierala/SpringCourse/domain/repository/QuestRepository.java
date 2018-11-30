@@ -31,9 +31,6 @@ public class QuestRepository {
         int rndDescrIdx = rnd.nextInt(descriptions.size());
         String RndDescription = descriptions.get(rndDescrIdx);
         createQuest(RndDescription);
-
-        System.out.println("New quest appeared: "+RndDescription);
-
     }
 
     public void deleteQuest(Quest questToDelet){

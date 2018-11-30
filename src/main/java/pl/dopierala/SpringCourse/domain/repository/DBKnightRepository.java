@@ -9,8 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
-@Scope(value="singleton")
+
 public class DBKnightRepository implements KnightRepository {
 
     Map<String, Knight> knights= new HashMap<>();
@@ -49,7 +48,7 @@ public class DBKnightRepository implements KnightRepository {
 
     @Override
     public String toString() {
-        return "InMemoryRepository{" +
+        return "InDBRepository{" +
                 "knights=" + knights +
                 '}';
     }

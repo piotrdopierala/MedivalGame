@@ -9,8 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
-@Scope(value="singleton")
+
 public class InMemoryRepository implements KnightRepository {
 
     Map<String, Knight> knights= new HashMap<>();
@@ -44,7 +43,7 @@ public class InMemoryRepository implements KnightRepository {
     public void build(){
         createKnight("Lancelot",29);
         createKnight("Percival",25);
-        System.out.println("InMemoryRepository has been built.");
+        //System.out.println("InMemoryRepository has been built.");
     }
 
 
