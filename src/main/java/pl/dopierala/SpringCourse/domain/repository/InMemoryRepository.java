@@ -24,6 +24,11 @@ public class InMemoryRepository implements KnightRepository {
     }
 
     @Override
+    public void createKnight(Knight newKnight) {
+        knights.put(newKnight.getName(),newKnight);
+    }
+
+    @Override
     public Collection<Knight> getAllKnights(){
         return  knights.values();
     }

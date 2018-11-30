@@ -23,6 +23,11 @@ public class DBKnightRepository implements KnightRepository {
     }
 
     @Override
+    public void createKnight(Knight newKnight) {
+        System.out.println("Using DB ...");
+    }
+
+    @Override
     public Collection<Knight> getAllKnights(){
         System.out.println("Using DB...");
         throw new UnsupportedOperationException();

@@ -16,13 +16,20 @@ public class Knight {
     }
 
     public Knight() {
-        this.name = "Lancelot";
-        this.age = 29;
+
     }
 
     public void setQuest(Quest quest) {
         System.out.println("Quest"+quest.toString()+" injected to knight "+name);
         this.quest = quest;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setAge(int age) {
