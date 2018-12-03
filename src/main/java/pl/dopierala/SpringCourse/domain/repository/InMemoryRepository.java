@@ -1,53 +1,64 @@
 package pl.dopierala.SpringCourse.domain.repository;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Repository;
 import pl.dopierala.SpringCourse.domain.Knight;
 
 import javax.annotation.PostConstruct;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class InMemoryRepository implements KnightRepository {
 
-    Map<String, Knight> knights= new HashMap<>();
+    Map<Integer, Knight> knights = new HashMap<>();
 
-    public InMemoryRepository(){
+    public InMemoryRepository() {
     }
 
     @Override
-    public void createKnight(String name, int age){
-        Knight newKnight = new Knight(name,age);
-        knights.put(name,newKnight);
+    public void createKnight(String name, int age) {
+        Knight newKnight = new Knight(name, age);
+        newKnight.setId(getNewId());
+        knights.put(newKnight.getId(), newKnight);
+    }
+
+    private int getNewId() {
+        if (knights.isEmpty()) {
+            return 0;
+        }
+        return (knights.keySet().stream().max(Comparator.naturalOrder()).get()) + 1;
+
     }
 
     @Override
     public void createKnight(Knight newKnight) {
-        knights.put(newKnight.getName(),newKnight);
+        knights.put(newKnight.getId(), newKnight);
     }
 
     @Override
-    public Collection<Knight> getAllKnights(){
-        return  knights.values();
+    public Collection<Knight> getAllKnights() {
+        return knights.values();
     }
 
     @Override
-    public Knight getKnight(String name){
-        return knights.get(name);
+    public Knight getKnightById(Integer id) {
+        return knights.get(id);
     }
 
     @Override
-    public void deleteKnight(String name){
-        knights.remove(name);
+    public Optional<Knight> getKnightByName(String name) {
+        Optional<Knight> knightOptional = knights.values().stream().filter(p -> p.getName().equals(name)).findFirst();
+        return knightOptional;
+    }
+
+    @Override
+    public void deleteKnight(Integer id) {
+        knights.remove(id);
     }
 
     @Override
     @PostConstruct
-    public void build(){
-        createKnight("Lancelot",29);
-        createKnight("Percival",25);
+    public void build() {
+        createKnight("Lancelot", 29);
+        createKnight("Percival", 25);
         //System.out.println("InMemoryRepository has been built.");
     }
 

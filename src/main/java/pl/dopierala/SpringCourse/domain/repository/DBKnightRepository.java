@@ -1,13 +1,12 @@
 package pl.dopierala.SpringCourse.domain.repository;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Repository;
 import pl.dopierala.SpringCourse.domain.Knight;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class DBKnightRepository implements KnightRepository {
@@ -34,13 +33,19 @@ public class DBKnightRepository implements KnightRepository {
     }
 
     @Override
-    public Knight getKnight(String name){
+    public Knight getKnightById(Integer id){
         System.out.println("Using DB...");
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void deleteKnight(String name){
+    public Optional<Knight> getKnightByName(String name) {
+        System.out.println("Using DB...");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteKnight(Integer id){
         System.out.println("Using DB...");
         throw new UnsupportedOperationException();
     }

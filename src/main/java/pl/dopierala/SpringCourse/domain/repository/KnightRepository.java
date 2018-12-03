@@ -2,8 +2,8 @@ package pl.dopierala.SpringCourse.domain.repository;
 
 import pl.dopierala.SpringCourse.domain.Knight;
 
-import javax.annotation.PostConstruct;
 import java.util.Collection;
+import java.util.Optional;
 
 public interface KnightRepository {
     void createKnight(String name, int age);
@@ -12,9 +12,11 @@ public interface KnightRepository {
 
     Collection<Knight> getAllKnights();
 
-    Knight getKnight(String name);
+    Knight getKnightById(Integer id);
 
-    void deleteKnight(String name);
+    Optional<Knight> getKnightByName(String name);
+
+    void deleteKnight(Integer id);
 
     void build();
 }

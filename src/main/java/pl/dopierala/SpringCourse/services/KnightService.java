@@ -22,4 +22,8 @@ public class KnightService {
     public void saveKnight(Knight newKnight) {
         repository.createKnight(newKnight);
     }
+
+    public Knight getKnight(Integer id) {
+        return repository.getKnightById(id);
+    }
 }

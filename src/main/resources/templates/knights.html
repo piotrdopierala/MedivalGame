@@ -16,13 +16,14 @@
     <thead>
     <tr>
         <td>Knight Name</td>
-        <td>Age</td>
+        <td>Level</td>
     </tr>
     </thead>
     <tbody th:each="knight : ${knights}">
     <tr>
         <td th:text="${knight.name}"></td>
-        <td th:text="${knight.age}"></td>
+        <td th:text="${knight.level}"></td>
+        <td><a th:href="${'/knight?id='+knight.id}">Szczegoly</a></td>
     </tr>
     </tbody>
 </table>

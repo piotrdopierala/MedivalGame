@@ -5,13 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Objects;
 
 public class Knight {
+    private int id;
     private String name;
     private int age;
     private Quest quest;
+    private int level;
 
     public Knight(String name, int age) {
         this.name = name;
         this.age = age;
+        this.level=1;
         //this.quest = quest;
     }
 
@@ -38,6 +41,22 @@ public class Knight {
 
     public int getAge() {
         return age;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     @Override
