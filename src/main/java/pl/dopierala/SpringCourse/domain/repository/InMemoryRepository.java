@@ -30,6 +30,7 @@ public class InMemoryRepository implements KnightRepository {
 
     @Override
     public void createKnight(Knight newKnight) {
+        newKnight.setId(getNewId());
         knights.put(newKnight.getId(), newKnight);
     }
 

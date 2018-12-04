@@ -1,12 +1,21 @@
 package pl.dopierala.SpringCourse.domain;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Knight {
     private int id;
+    @NotNull
+    @Size(min = 2, max=40, message = "Imie rycerza musi być między 2, a 40 znakow.")
     private String name;
+    @NotNull
+    @Range(min = 18, max = 40, message="Wiek rycerza musi być między 18, a 40 lat.")
     private int age;
     private Quest quest;
     private int level;
@@ -14,16 +23,15 @@ public class Knight {
     public Knight(String name, int age) {
         this.name = name;
         this.age = age;
-        this.level=1;
+        this.level = 1;
         //this.quest = quest;
     }
 
     public Knight() {
-
     }
 
     public void setQuest(Quest quest) {
-        System.out.println("Quest"+quest.toString()+" injected to knight "+name);
+        System.out.println("Quest" + quest.toString() + " injected to knight " + name);
         this.quest = quest;
     }
 
