@@ -1,6 +1,7 @@
 package pl.dopierala.SpringCourse.domain.repository;
 
 import pl.dopierala.SpringCourse.domain.Knight;
+import pl.dopierala.SpringCourse.utils.Ids;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -16,21 +17,14 @@ public class InMemoryRepository implements KnightRepository {
     @Override
     public void createKnight(String name, int age) {
         Knight newKnight = new Knight(name, age);
-        newKnight.setId(getNewId());
+        newKnight.setId(Ids.getNewId(knights.keySet()));
+
         knights.put(newKnight.getId(), newKnight);
-    }
-
-    private int getNewId() {
-        if (knights.isEmpty()) {
-            return 0;
-        }
-        return (knights.keySet().stream().max(Comparator.naturalOrder()).get()) + 1;
-
     }
 
     @Override
     public void createKnight(Knight newKnight) {
-        newKnight.setId(getNewId());
+        newKnight.setId(Ids.getNewId(knights.keySet()));
         knights.put(newKnight.getId(), newKnight);
     }
 
@@ -69,5 +63,12 @@ public class InMemoryRepository implements KnightRepository {
         return "InMemoryRepository{" +
                 "knights=" + knights +
                 '}';
+    }
+
+    @Override
+    public void updateKnight(int id, Knight knight) {
+        knights.put(id,knight);
+        //Knight oldKnight = getKnightById(id);
+        //oldKnight=knight;
     }
 }

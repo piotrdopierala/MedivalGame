@@ -19,4 +19,8 @@ public interface KnightRepository {
     void deleteKnight(Integer id);
 
     void build();
+
+    default void updateKnight(int id, Knight knight){
+        throw new UnsupportedOperationException();
+    }
 }

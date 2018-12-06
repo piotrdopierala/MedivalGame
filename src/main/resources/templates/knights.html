@@ -14,22 +14,27 @@
 <div class="container">
     Actual time: <span th:text="${timecomponent.time}"/>
     Gold amount: <span th:text="${playerinformation.gold}"/>
-<table class="table">
-    <thead>
-    <tr>
-        <td>Knight Name</td>
-        <td>Level</td>
-    </tr>
-    </thead>
-    <tbody th:each="knight : ${knights}">
-    <tr>
-        <td th:text="${knight.name}"></td>
-        <td th:text="${knight.level}"></td>
-        <td><a th:href="${'/knight?id='+knight.id}">Szczegoly</a></td>
-        <td><a th:href="${'/knight/delete/'+knight.id}">Usun</a></td>
-    </tr>
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+        <tr>
+            <td>Knight Name</td>
+            <td>Level</td>
+            <td>Quest</td>
+        </tr>
+        </thead>
+        <tbody th:each="knight : ${knights}">
+        <tr>
+            <td th:text="${knight.name}"></td>
+            <td th:text="${knight.level}"></td>
+            <td>
+                <span th:if="${knight.quest==null}"> No quest. Knight is bored.<a th:href="${'/assignQuest?knightId='+knight.id}">Przypisz zadanie</a></span>
+                <span th:if="${knight.quest!=null}" th:text="${knight.quest.description}"></span>
+            </td>
+            <td><a th:href="${'/knight?id='+knight.id}">Szczegoly</a></td>
+            <td><a th:href="${'/knight/delete/'+knight.id}">Usun</a></td>
+        </tr>
+        </tbody>
+    </table>
     <div class="row">
         <a href="/newknight">Add new knight.</a>
     </div>

@@ -31,8 +31,13 @@ public class Knight {
     }
 
     public void setQuest(Quest quest) {
-        System.out.println("Quest" + quest.toString() + " injected to knight " + name);
+        //System.out.println("Quest" + quest.toString() + " injected to knight " + name);
         this.quest = quest;
+        this.quest.setStarted(true);
+    }
+
+    public Quest getQuest() {
+        return quest;
     }
 
     public String getName() {

@@ -1,22 +1,21 @@
 package pl.dopierala.SpringCourse.domain.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import pl.dopierala.SpringCourse.domain.Quest;
+import pl.dopierala.SpringCourse.utils.Ids;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Repository
 public class QuestRepository {
-    List<Quest> questList = new ArrayList<>();
+    Map<Integer,Quest> quests = new HashMap<>();
     static final Random rnd = new Random();
 
     public void createQuest(String description){
-        questList.add(new Quest(description));
+        int newId = Ids.getNewId(quests.keySet());
+        quests.put(newId, new Quest(newId,description));
     }
 
     @Scheduled(fixedDelayString = "${questCreationDelay}")
@@ -34,11 +33,11 @@ public class QuestRepository {
     }
 
     public void deleteQuest(Quest questToDelet){
-        questList.remove(questToDelet);
+        quests.remove(questToDelet.getId());
     }
 
     public List<Quest> getAll() {
-        return questList;
+        return new ArrayList<>(quests.values());
     }
 
     @PostConstruct
@@ -46,10 +45,19 @@ public class QuestRepository {
 
     }
 
+    public void update(Quest quest){
+        quests.put(quest.getId(),quest);
+    }
+
+    public Quest getQuest(Integer id){
+        return quests.get(id);
+    }
+
+
     @Override
     public String toString() {
         return "QuestRepository{" +
-                "questList=" + questList +
+                "quests=" + quests +
                 '}';
     }
 }
