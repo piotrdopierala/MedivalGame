@@ -7,6 +7,7 @@ import pl.dopierala.SpringCourse.domain.repository.KnightRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Component
@@ -39,13 +40,15 @@ public class KnightService {
 
     public int collectRewards() {
         int sum = repository.getAllKnights().stream()
+                .filter(k-> !Objects.isNull(k.getQuest()))
                 .filter(k -> k.getQuest().isCompleted())
                 .mapToInt(knight -> knight.getQuest().getReward())
                 .sum();
 
         repository.getAllKnights().stream()
+                .filter(k-> !Objects.isNull(k.getQuest()))
                 .filter(k -> k.getQuest().isCompleted())
-                .forEach(k -> k.setQuest(null));
+                .forEach(k -> k.deleteQuest());
 
         return sum;
     }

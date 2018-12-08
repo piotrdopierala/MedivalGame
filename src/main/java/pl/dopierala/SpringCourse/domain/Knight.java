@@ -36,6 +36,10 @@ public class Knight {
         this.quest.setStarted(true);
     }
 
+    public void deleteQuest(){
+        this.quest=null;
+    }
+
     public Quest getQuest() {
         return quest;
     }

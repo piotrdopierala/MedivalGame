@@ -47,7 +47,12 @@ public class QuestController {
     @RequestMapping(value="/checkQuests")
     public String checkQuest(Model model){
         List<Knight> allKnights = knightService.getAllKnights();
-        allKnights.forEach(k->k.getQuest().isCompleted());
+        allKnights.forEach((k)-> {
+                    if (k.getQuest() != null) {
+                        k.getQuest().isCompleted();
+                    }
+                }
+        ); //here error if knight don't have quest
         int currentGold = playerInformation.getGold();
         playerInformation.setGold(currentGold+knightService.collectRewards());
         return "redirect:/knights";
