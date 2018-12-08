@@ -12,8 +12,10 @@
 </head>
 <body>
 <div class="container">
-    Actual time: <span th:text="${timecomponent.time}"/>
     Gold amount: <span th:text="${playerinformation.gold}"/>
+
+    <a th:href="${'/checkQuests'}">Check quests</a>
+
     <table class="table">
         <thead>
         <tr>

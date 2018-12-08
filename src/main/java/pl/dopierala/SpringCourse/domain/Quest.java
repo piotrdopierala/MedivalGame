@@ -1,15 +1,18 @@
 package pl.dopierala.SpringCourse.domain;
 
+import java.time.LocalDateTime;
+
 public class Quest {
     private int id;
     private String description;
-    private int reward=100; //ile zlota za wykonanie questa
-    private int length=30000; //czas trwania questa w [ms]
+    private int reward = 100; //ile zlota za wykonanie questa
+    protected int lengthInSeconds = 15; //czas trwania questa w [sek]
     private boolean started = false;
-    private boolean finished = false;
+    private boolean completed = false;
+    protected LocalDateTime startDate;
 
-    public Quest(int id,String description) {
-        this.id=id;
+    public Quest(int id, String description) {
+        this.id = id;
         this.description = description;
     }
 
@@ -34,12 +37,12 @@ public class Quest {
         this.reward = reward;
     }
 
-    public int getLength() {
-        return length;
+    public int getLengthInSeconds() {
+        return lengthInSeconds;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setLengthInSeconds(int lengthInSeconds) {
+        this.lengthInSeconds = lengthInSeconds;
     }
 
     public boolean isStarted() {
@@ -47,16 +50,25 @@ public class Quest {
     }
 
     public void setStarted(boolean started) {
+        if (started)
+            this.startDate = LocalDateTime.now();
         this.started = started;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public boolean isCompleted() {
+        if (completed) {
+            return true;
+        } else {
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime finishDateTime = this.startDate.plusSeconds(lengthInSeconds);
+            boolean isAfter = now.isAfter(finishDateTime);
+            if (isAfter) {
+                this.completed = true;
+            }
+            return completed;
+        }
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
 
     public int getId() {
         return id;
@@ -65,4 +77,5 @@ public class Quest {
     public void setId(int id) {
         this.id = id;
     }
+
 }
