@@ -3,11 +3,14 @@ package pl.dopierala.SpringCourse.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.dopierala.SpringCourse.domain.Knight;
+import pl.dopierala.SpringCourse.domain.PlayerInformation;
+import pl.dopierala.SpringCourse.domain.Quest;
 import pl.dopierala.SpringCourse.domain.repository.KnightRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 
 @Component
@@ -16,6 +19,8 @@ public class KnightService {
     @Autowired
     KnightRepository repository;
 
+    @Autowired
+    PlayerInformation playerInformation;
 
     public List<Knight> getAllKnights() {
         List<Knight> allKnights = new ArrayList<>(repository.getAllKnights());
@@ -39,17 +44,36 @@ public class KnightService {
     }
 
     public int collectRewards() {
+        Predicate<Knight> completedNotNullQuestsPredicate = k -> {
+            if (k.getQuest() != null) {
+                return k.getQuest().isCompleted();
+            } else
+                return false;
+        };
+
         int sum = repository.getAllKnights().stream()
-                .filter(k-> !Objects.isNull(k.getQuest()))
-                .filter(k -> k.getQuest().isCompleted())
+                .filter(completedNotNullQuestsPredicate)
                 .mapToInt(knight -> knight.getQuest().getReward())
                 .sum();
 
         repository.getAllKnights().stream()
-                .filter(k-> !Objects.isNull(k.getQuest()))
-                .filter(k -> k.getQuest().isCompleted())
-                .forEach(k -> k.deleteQuest());
+                .filter(completedNotNullQuestsPredicate)
+                .forEach(Knight::deleteQuest);
 
         return sum;
+    }
+
+    public void getMyGold() {
+
+        List<Knight> allKnights = getAllKnights();
+        allKnights.forEach((k) -> {
+                    if (k.getQuest() != null) {
+                        k.getQuest().isCompleted();
+                    }
+                }
+        );
+
+        int currentGold = playerInformation.getGold();
+        playerInformation.setGold(currentGold + collectRewards());
     }
 }
