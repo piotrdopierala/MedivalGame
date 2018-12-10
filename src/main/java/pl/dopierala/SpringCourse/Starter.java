@@ -9,6 +9,8 @@ import pl.dopierala.SpringCourse.domain.repository.KnightRepository;
 import pl.dopierala.SpringCourse.domain.repository.QuestRepository;
 import pl.dopierala.SpringCourse.services.QuestService;
 
+import javax.transaction.Transactional;
+
 
 @Component
 public class Starter implements CommandLineRunner {
@@ -24,10 +26,13 @@ public class Starter implements CommandLineRunner {
     QuestService questService;
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         questRepository.createRandomQuest();
         questRepository.createRandomQuest();
         questRepository.createRandomQuest();
+
+        knightRepository.createKnight("Percival",33);
 
         questService.assignRandomQuest("Percival");
     }

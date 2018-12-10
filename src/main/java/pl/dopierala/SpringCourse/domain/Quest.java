@@ -1,9 +1,16 @@
 package pl.dopierala.SpringCourse.domain;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+//@Table(name="Zadania")
 public class Quest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    //@Column(name="Opis") //zmiana nazwy kolumny
     private String description;
     private int reward = 100; //ile zlota za wykonanie questa
     protected int lengthInSeconds = 15; //czas trwania questa w [sek]
@@ -14,6 +21,13 @@ public class Quest {
     public Quest(int id, String description) {
         this.id = id;
         this.description = description;
+    }
+
+    public Quest(String description){
+        this.description = description;
+    }
+
+    public Quest() {
     }
 
     @Override

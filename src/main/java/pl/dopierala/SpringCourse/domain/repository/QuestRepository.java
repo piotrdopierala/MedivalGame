@@ -3,22 +3,33 @@ package pl.dopierala.SpringCourse.domain.repository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import pl.dopierala.SpringCourse.domain.Quest;
-import pl.dopierala.SpringCourse.utils.Ids;
 
-import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Repository
 public class QuestRepository {
-    Map<Integer,Quest> quests = new HashMap<>();
+
+    @PersistenceContext
+    private EntityManager em;
+
+    //Map<Integer,Quest> quests = new HashMap<>();
     static final Random rnd = new Random();
 
+    @Transactional
     public void createQuest(String description){
-        int newId = Ids.getNewId(quests.keySet());
-        quests.put(newId, new Quest(newId,description));
+        //int newId = Ids.getNewId(quests.keySet()); //now hibernate will create ID
+        //quests.put(newId, new Quest(description));
+
+        Quest quest = new Quest(description);
+        em.persist(quest);
+
     }
 
     @Scheduled(fixedDelayString = "${questCreationDelay}")
+    @Transactional
     public void createRandomQuest(){
         List<String> descriptions = new ArrayList<>();
         descriptions.add("Save the princess");
@@ -32,32 +43,24 @@ public class QuestRepository {
         createQuest(RndDescription);
     }
 
+    @Transactional
     public void deleteQuest(Quest questToDelet){
-        quests.remove(questToDelet.getId());
+        //quests.remove(questToDelet.getId());
+        em.remove(questToDelet);
     }
 
     public List<Quest> getAll() {
-        return new ArrayList<>(quests.values());
+        return em.createQuery("from Quest",Quest.class).getResultList();
     }
 
-    @PostConstruct
-    public void init(){
-
-    }
-
+    @Transactional
     public void update(Quest quest){
-        quests.put(quest.getId(),quest);
+        //quests.put(quest.getId(),quest);
+        em.merge(quest);
     }
 
     public Quest getQuest(Integer id){
-        return quests.get(id);
-    }
-
-
-    @Override
-    public String toString() {
-        return "QuestRepository{" +
-                "quests=" + quests +
-                '}';
+        //return quests.get(id);
+        return em.find(Quest.class,id);
     }
 }

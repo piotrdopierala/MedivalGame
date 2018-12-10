@@ -3,20 +3,28 @@ package pl.dopierala.SpringCourse.domain;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+@Entity
 public class Knight {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @NotNull
-    @Size(min = 2, max=40, message = "Imie rycerza musi być między 2, a 40 znakow.")
+    @Size(min = 2, max = 40, message = "Imie rycerza musi być między 2, a 40 znakow.")
     private String name;
     @NotNull
-    @Range(min = 18, max = 40, message="Wiek rycerza musi być między 18, a 40 lat.")
+    @Range(min = 18, max = 40, message = "Wiek rycerza musi być między 18, a 40 lat.")
     private int age;
+
+    @OneToOne
     private Quest quest;
     private int level;
 
@@ -36,8 +44,8 @@ public class Knight {
         this.quest.setStarted(true);
     }
 
-    public void deleteQuest(){
-        this.quest=null;
+    public void deleteQuest() {
+        this.quest = null;
     }
 
     public Quest getQuest() {
