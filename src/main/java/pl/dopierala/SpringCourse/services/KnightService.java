@@ -6,7 +6,10 @@ import pl.dopierala.SpringCourse.domain.Knight;
 import pl.dopierala.SpringCourse.domain.PlayerInformation;
 import pl.dopierala.SpringCourse.domain.Quest;
 import pl.dopierala.SpringCourse.domain.repository.KnightRepository;
+import pl.dopierala.SpringCourse.domain.repository.PlayerInformationRepository;
+import pl.dopierala.SpringCourse.domain.repository.QuestRepository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +23,11 @@ public class KnightService {
     KnightRepository repository;
 
     @Autowired
-    PlayerInformation playerInformation;
+    QuestRepository questRepository;
+
+    @Autowired
+    PlayerInformationRepository playerInformationRepository;
+
 
     public List<Knight> getAllKnights() {
         List<Knight> allKnights = new ArrayList<>(repository.getAllKnights());
@@ -63,17 +70,24 @@ public class KnightService {
         return sum;
     }
 
+    @Transactional
     public void getMyGold() {
 
         List<Knight> allKnights = getAllKnights();
         allKnights.forEach((k) -> {
                     if (k.getQuest() != null) {
-                        k.getQuest().isCompleted();
+                        boolean completed = k.getQuest().isCompleted();
+                        if(completed){
+                            questRepository.update(k.getQuest());
+                        }
+
+
                     }
                 }
         );
 
-        int currentGold = playerInformation.getGold();
-        playerInformation.setGold(currentGold + collectRewards());
+        PlayerInformation first = playerInformationRepository.getFirst();
+        int currentGold = first.getGold();
+        first.setGold(currentGold + collectRewards());
     }
 }

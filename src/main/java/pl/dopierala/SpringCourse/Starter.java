@@ -1,11 +1,11 @@
 package pl.dopierala.SpringCourse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
+import pl.dopierala.SpringCourse.domain.PlayerInformation;
 import pl.dopierala.SpringCourse.domain.repository.KnightRepository;
+import pl.dopierala.SpringCourse.domain.repository.PlayerInformationRepository;
 import pl.dopierala.SpringCourse.domain.repository.QuestRepository;
 import pl.dopierala.SpringCourse.services.QuestService;
 
@@ -25,6 +25,9 @@ public class Starter implements CommandLineRunner {
     @Autowired
     QuestService questService;
 
+    @Autowired
+    PlayerInformationRepository repository;
+
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -33,6 +36,8 @@ public class Starter implements CommandLineRunner {
         questRepository.createRandomQuest();
 
         knightRepository.createKnight("Percival",33);
+
+        repository.createPlayerInformation(new PlayerInformation());
 
         questService.assignRandomQuest("Percival");
     }

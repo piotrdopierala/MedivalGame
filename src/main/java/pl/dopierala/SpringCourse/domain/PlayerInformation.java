@@ -9,8 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Component
-//@Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+
 @Entity
 public class PlayerInformation {
 
@@ -19,6 +18,7 @@ public class PlayerInformation {
     private int id;
 
     private int gold = 0;
+
 
     public int getGold() {
         return gold;

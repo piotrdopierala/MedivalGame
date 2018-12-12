@@ -39,6 +39,7 @@ public class DBKnightRepository implements KnightRepository {
     @Override
     public Collection<Knight> getAllKnights() {
         return em.createQuery("from Knight", Knight.class).getResultList();
+
     }
 
     @Override

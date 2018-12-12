@@ -12,6 +12,7 @@ import pl.dopierala.SpringCourse.components.TimeComponent;
 import pl.dopierala.SpringCourse.domain.Knight;
 import pl.dopierala.SpringCourse.domain.PlayerInformation;
 import pl.dopierala.SpringCourse.domain.repository.KnightRepository;
+import pl.dopierala.SpringCourse.domain.repository.PlayerInformationRepository;
 import pl.dopierala.SpringCourse.services.KnightService;
 
 import javax.validation.Valid;
@@ -30,14 +31,15 @@ public class KnightController {
     TimeComponent timeComponent;
 
     @Autowired
-    PlayerInformation playerInformation;
+    PlayerInformationRepository playerInformationRepository;
 
     @RequestMapping("/knights")
     public String getKnights(Model model) {
         List<Knight> allKnights = service.getAllKnights();
+        PlayerInformation pi = playerInformationRepository.getFirst();
         model.addAttribute("knights", allKnights);
         model.addAttribute("timecomponent", timeComponent);
-        model.addAttribute("playerinformation", playerInformation);
+        model.addAttribute("playerinformation", pi);
         return "knights";
     }
 
@@ -57,18 +59,20 @@ public class KnightController {
 
     @RequestMapping("/newknight")
     public String createKnight(Model model) {
+        PlayerInformation pi = playerInformationRepository.getFirst();
         model.addAttribute("knight", new Knight());
         model.addAttribute("timecomponent", timeComponent);
-        model.addAttribute("playerinformation", playerInformation);
+        model.addAttribute("playerinformation", pi);
         return "knightform";
     }
 
     @RequestMapping("/knight")
     public String getKnight(@RequestParam("id") Integer id, Model model) {
         Knight knight = service.getKnight(id);
+        PlayerInformation pi = playerInformationRepository.getFirst();
         model.addAttribute("knight", knight);
         model.addAttribute("timecomponent", timeComponent);
-        model.addAttribute("playerinformation", playerInformation);
+        model.addAttribute("playerinformation", pi);
         return "knight";
     }
 

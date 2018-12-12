@@ -10,6 +10,7 @@ import pl.dopierala.SpringCourse.domain.Knight;
 import pl.dopierala.SpringCourse.domain.PlayerInformation;
 import pl.dopierala.SpringCourse.domain.Quest;
 import pl.dopierala.SpringCourse.domain.repository.KnightRepository;
+import pl.dopierala.SpringCourse.domain.repository.PlayerInformationRepository;
 import pl.dopierala.SpringCourse.services.KnightService;
 import pl.dopierala.SpringCourse.services.QuestService;
 
@@ -25,7 +26,7 @@ public class QuestController {
     QuestService questService;
 
     @Autowired
-    PlayerInformation playerInformation;
+    PlayerInformationRepository playerInformationRepository;
 
     @RequestMapping("/assignQuest")
     public String assignQuest(@RequestParam("knightId") Integer id, Model model){
