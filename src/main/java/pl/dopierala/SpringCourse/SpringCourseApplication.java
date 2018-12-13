@@ -21,6 +21,7 @@ public class SpringCourseApplication {
     // store for item you can buy for gold (helps finish quests)
     // build castle for gold
     // improve knight and sent them to fight castles of other players
+    // page to create new page users (end of 7_3)
 
     public static void main(String[] args)
     {

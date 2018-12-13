@@ -19,6 +19,18 @@ public class PlayerInformation {
 
     private int gold = 0;
 
+    private String username;
+    private String password;
+    private boolean enabled;
+
+    public PlayerInformation(String userName, String password) {
+        this.username = userName;
+        this.password = password;
+        this.enabled = true;
+    }
+
+    public PlayerInformation() {
+    }
 
     public int getGold() {
         return gold;

@@ -80,8 +80,6 @@ public class KnightService {
                         if(completed){
                             questRepository.update(k.getQuest());
                         }
-
-
                     }
                 }
         );
